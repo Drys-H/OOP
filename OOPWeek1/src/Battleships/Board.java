@@ -53,30 +53,30 @@ public class Board {
         return x >= 0 && y >= 0 && x < this.width && y < this.height;
     }
 
-    /**
-     * First attempt set up method - hard code a few ships
-     * This method will need reworking later.
-     */
-    public void setup() {
-        // a battleship
-        Ship s = new Ship("battleship", "B");
-        getSquare(1,1).setShip(s);
-        getSquare(2,1).setShip(s);
-        getSquare(3,1).setShip(s);
-        getSquare(4,1).setShip(s);
-        getSquare(5,1).setShip(s);
-        // a destroyer
-        s = new Ship("destroyer", "D");
-        getSquare(7,4).setShip(s);
-        getSquare(7,5).setShip(s);
-        getSquare(7,6).setShip(s);
-        getSquare(7,7).setShip(s);
-        // a submarine
-        s = new Ship("submarine", "S");
-        getSquare(3,3).setShip(s);
-        getSquare(4,3).setShip(s);
-        getSquare(5,3).setShip(s);
-    }
+    // /**
+    //  * First attempt set up method - hard code a few ships
+    //  * This method will need reworking later.
+    //  */
+    // public void setup() {
+    //     // a battleship
+    //     Ship s = new Ship("battleship", "B");
+    //     getSquare(1,1).setShip(s);
+    //     getSquare(2,1).setShip(s);
+    //     getSquare(3,1).setShip(s);
+    //     getSquare(4,1).setShip(s);
+    //     getSquare(5,1).setShip(s);
+    //     // a destroyer
+    //     s = new Ship("destroyer", "D");
+    //     getSquare(7,4).setShip(s);
+    //     getSquare(7,5).setShip(s);
+    //     getSquare(7,6).setShip(s);
+    //     getSquare(7,7).setShip(s);
+    //     // a submarine
+    //     s = new Ship("submarine", "S");
+    //     getSquare(3,3).setShip(s);
+    //     getSquare(4,3).setShip(s);
+    //     getSquare(5,3).setShip(s);
+    // }
 
     public String[] toStringArray(final boolean showShips)  {
         final String[] array = new String[this.height];

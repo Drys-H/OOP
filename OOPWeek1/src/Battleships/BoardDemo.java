@@ -4,7 +4,7 @@ public class BoardDemo {
     public static void main(String[] args) {
         Board b1 = new Board(10,10);
 
-        b1.setup();
+        //b1.setup();
 
         b1.getSquare(0,0).setTried();
         b1.getSquare(0,1).setTried();
