@@ -84,6 +84,7 @@ public class Board {
     //     getSquare(5,3).setShip(s);
     // }
     public void placeShip(Ship ship) {
+        final int BREAK_THRESHOLD = 1000;
         Random random = new Random();
 
         // rotate the ship a random number of times
@@ -91,20 +92,40 @@ public class Board {
         for(int i = 0; i < rotations; i++) {
         ship.rotate();
         }
-        
-        final int x = random.nextInt(this.width - (ship.getWidth()-1));
-        final int y = random.nextInt(this.height - (ship.getHeight()-1));
-        ship.setLocation(x, y);
-        
-        boolean collision = false;
-        for(final Ship s : this.ships) {
-            if (s.overlap(ship)) {
-            collision = true;
-            break; // from the checking ship overlap loop
+
+        // try placing the ship in random locations that do not
+        // clash with ships already placed on the board
+        int breakCount = 0;
+        boolean collision = true;
+        while(collision) {
+
+            ship.rotate(); // try different orientation each time
+            final int x = random.nextInt(this.width - (ship.getWidth() - 1));
+            final int y = random.nextInt(this.height - (ship.getHeight() - 1));
+            ship.setLocation(x, y);
+            collision = false;
+            for (final Ship s : this.ships) {
+                if (s.overlap(ship)) {
+                    collision = true;
+                    break; // from the checking ship overlap loop
+                }
             }
-        }
-        if (collision) {
-	        throw new FailedToPlaceShipException();
+            breakCount++;
+            if (breakCount > BREAK_THRESHOLD) {
+                // wipe the board
+                for (int i = 0; i < this.board.length; i++) {
+                    Square[] row = this.board[i];
+                    for (int j = 0; j < row.length; j++) {
+                        row[j].setShip(null);
+                    }
+                }
+                // and reset and discard all ships
+                for(Ship s : this.ships) {
+                    s.setLocation(0,0);
+                }
+                this.ships.clear();
+                throw new FailedToPlaceShipException();
+            }
         }
         ship.addToBoard(this);
         this.ships.add(ship);
