@@ -1,5 +1,9 @@
 package Battleships;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class Board {
     /**
      * First attempt at implementing a bomb drop - modifies the square appropriately.
@@ -24,6 +28,9 @@ public class Board {
     private int height;
 
     private Square[][] board;
+
+    private final List<Ship> ships = new ArrayList<>();
+
 
     public Board(int width, int height) {
         this.width = width;
@@ -52,8 +59,7 @@ public class Board {
     public boolean inBounds(int x, int y) {
         return x >= 0 && y >= 0 && x < this.width && y < this.height;
     }
-
-    // /**
+        // /**
     //  * First attempt set up method - hard code a few ships
     //  * This method will need reworking later.
     //  */
@@ -77,6 +83,32 @@ public class Board {
     //     getSquare(4,3).setShip(s);
     //     getSquare(5,3).setShip(s);
     // }
+    public void placeShip(Ship ship) {
+        Random random = new Random();
+
+        // rotate the ship a random number of times
+        final int rotations = random.nextInt(4);
+        for(int i = 0; i < rotations; i++) {
+        ship.rotate();
+        }
+        
+        final int x = random.nextInt(this.width - (ship.getWidth()-1));
+        final int y = random.nextInt(this.height - (ship.getHeight()-1));
+        ship.setLocation(x, y);
+        
+        boolean collision = false;
+        for(final Ship s : this.ships) {
+            if (s.overlap(ship)) {
+            collision = true;
+            break; // from the checking ship overlap loop
+            }
+        }
+        if (collision) {
+	        throw new FailedToPlaceShipException();
+        }
+        ship.addToBoard(this);
+        this.ships.add(ship);
+    }
 
     public String[] toStringArray(final boolean showShips)  {
         final String[] array = new String[this.height];

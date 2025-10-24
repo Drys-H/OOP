@@ -5,7 +5,9 @@ public class BoardDemo {
         Board b1 = new Board(10,10);
 
         //b1.setup();
-
+        for(int i = 0; i < 10; i++) {
+            b1.placeShip(new Ship("battleship", "B", 5));
+        }
         b1.getSquare(0,0).setTried();
         b1.getSquare(0,1).setTried();
 
@@ -13,20 +15,20 @@ public class BoardDemo {
 
         // drop some bombs
 
-        System.out.println("Bombing square x=2, y=0");
-        b1.dropBomb(2, 0);
-        System.out.println(b1);
-        System.out.println();
+        // System.out.println("Bombing square x=2, y=0");
+        // b1.dropBomb(2, 0);
+        // System.out.println(b1);
+        // System.out.println();
 
-        System.out.println("Bombing square x=2, y=1");
-        b1.dropBomb(2, 1);
-        System.out.println(b1);
-        System.out.println();
+        // System.out.println("Bombing square x=2, y=1");
+        // b1.dropBomb(2, 1);
+        // System.out.println(b1);
+        // System.out.println();
 
-        System.out.println("Bombing square x=2, y=2");
-        b1.dropBomb(2, 2);
-        System.out.println(b1);
-        System.out.println();
+        // System.out.println("Bombing square x=2, y=2");
+        // b1.dropBomb(2, 2);
+        // System.out.println(b1);
+        // System.out.println();
 
         // we also need to be able to print the board without showing
         // the ships - this is one way to do that:
