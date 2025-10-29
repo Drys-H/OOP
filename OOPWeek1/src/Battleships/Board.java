@@ -8,16 +8,24 @@ public class Board {
     /**
      * First attempt at implementing a bomb drop - modifies the square appropriately.
      * This method will need reworking later.
+     * Now updated to print a message when a ship is sunk.
      *
      * @param x
      * @param y
      * @return
-     */
+     **/
     public boolean dropBomb(final int x, final int y) {
         Square square = getSquare(x, y);
         if (!square.isTried()) {
             square.setTried();
-            return square.isHit();
+            if (square.isHit()) {
+                if (square.getShip().isSunk()) {
+                    System.out.println( square.getShip().getName() + " SUNK!");
+                }
+                return true;
+            } else {
+                return false;
+            }
         } else {
             // this is a wasted turn - perhaps an exception would be a better idea?
             return false;
@@ -83,7 +91,13 @@ public class Board {
     //     getSquare(4,3).setShip(s);
     //     getSquare(5,3).setShip(s);
     // }
-    public void placeShip(Ship ship) {
+
+        public void setUp(Fleet fleet) {
+            for (Ship s : fleet.getShips()) {
+                placeShip(s);
+            }
+        }
+        public void placeShip(Ship ship) {
         final int BREAK_THRESHOLD = 1000;
         Random random = new Random();
 
