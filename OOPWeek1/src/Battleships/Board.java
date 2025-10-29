@@ -9,7 +9,6 @@ public class Board {
      * First attempt at implementing a bomb drop - modifies the square appropriately.
      * This method will need reworking later.
      * Now updated to print a message when a ship is sunk.
-     *
      * @param x
      * @param y
      * @return
