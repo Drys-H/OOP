@@ -2,10 +2,10 @@ package Battleships;
 
 public class BoardDemo {
     public static void main(String[] args) {
-        Board b1 = new Board(10,10);
+        Board b1 = new Board(20,20);
 
         //b1.setup();
-        Fleet fleet = new Fleet(1,2,3);
+        Fleet fleet = new Fleet(1,2,3, 4,  1);
         b1.setUp(fleet);
 
         b1.getSquare(0,0).setTried();
