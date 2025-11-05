@@ -2,15 +2,15 @@ package Battleships;
 
 import java.awt.geom.Rectangle2D;
 
-public class Ship {
+public abstract class Ship {
 
     private String name;
     private String code;
 
-    private int squareCount;
+    protected int squareCount;
 
-    private int x;
-    private int y;
+    protected int x;
+    protected int y;
     private boolean horizontal;
 
     private int hits;
@@ -40,37 +40,14 @@ public class Ship {
         this.x = x; this.y = y;
     } 
 
-    public void rotate() {
-        this.horizontal = !this.horizontal;
-    }
+    public abstract void rotate();
 
-    public void addToBoard(final Board board) {
-        if (this.horizontal) {
-        for(int x = 0; x < this.squareCount; x++) {
-            board.getSquare(x + this.x, this.y).setShip(this);
-        }
-        } else {
-        for(int y = 0; y < this.squareCount; y++) {
-            board.getSquare(this.x, y + this.y).setShip(this);
-            }      
-        }   
-    }
+    public abstract void addToBoard(final Board board);
 
-    public int getWidth() {
-        if (this.horizontal) {
-        return this.squareCount;
-        } else {
-        return 1;
-        }
-    }
+    public abstract int getWidth();
   
-    public int getHeight() {
-        if (this.horizontal) {
-        return 1;
-        } else {
-        return this.squareCount;
-        }
-    }
+    public abstract int getHeight();
+
     public boolean overlap(final Ship other) {
         final Rectangle2D rectThis = new Rectangle2D.Double(this.x, this.y, this.getWidth(), this.getHeight());
         final Rectangle2D rectOther = new Rectangle2D.Double(other.x, other.y, other.getWidth(), other.getHeight());
@@ -87,21 +64,5 @@ public class Ship {
     public boolean isSunk() {
         return (this.hits == this.squareCount);
     }
-    @Override
-    public String toString()  {
-        final StringBuilder builder = new StringBuilder();
-        if (this.horizontal) {
-            for(int x = 0; x < this.squareCount; x++) {
-                builder.append("O");
-            }
-            builder.append("\n");
-        } else {
-            for(int y = 0; y < this.squareCount; y++) {
-                builder.append("O\n");
-                }      
-        }
-        return builder.toString();
-    }
-
 
 }
