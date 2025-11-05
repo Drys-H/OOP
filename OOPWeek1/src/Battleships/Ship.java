@@ -11,7 +11,6 @@ public abstract class Ship {
 
     protected int x;
     protected int y;
-    private boolean horizontal;
 
     private int hits;
 

@@ -2,7 +2,7 @@ package Battleships.ship;
 
 import Battleships.Ship;
 
-public class Destroyer extends Ship {
+public class Destroyer extends SimpleShip {
 
     public Destroyer() {
         super("destroyer","D",4);
