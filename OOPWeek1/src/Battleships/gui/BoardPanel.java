@@ -35,7 +35,7 @@ public class BoardPanel extends JPanel {
     }
     private void handleButton(final int x, final int y) {
         if (!this.board.getSquare(x,y).isTried()) {
-            System.out.println( "Player clicked " + x + ", " + y);
+            this.gamePanel.bombDropped(this.player,x,y);
         }
     }
 
@@ -54,6 +54,9 @@ public class BoardPanel extends JPanel {
                 this.boardButtons[y][x].setEnabled(enabled);
             }
         }
+    }
+    public BoardButton getBoardButton(int x, int y){
+        return this.boardButtons[y][x];
     }
 //    public static void launch(String[] args) {
 //        JFrame f = new JFrame();

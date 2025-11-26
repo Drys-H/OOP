@@ -3,6 +3,7 @@ package Battleships.gui;
 import Battleships.AbstractGame;
 import Battleships.AbstractPlayer;
 import Battleships.Outcome;
+import Battleships.Ship;
 
 import javax.swing.*;
 import java.awt.*;
@@ -101,5 +102,40 @@ public class GamePanel extends JPanel {
     }
 
     public void displayResult(final AbstractPlayer bomber, final Outcome result) {
+        BoardPanel boardPanel = this.player1BoardPanel;
+        if (bomber.getOpponent() == this.game.getPlayer2()) {
+            boardPanel = this.player2BoardPanel;
+        }
+        final BoardButton b = boardPanel.getBoardButton(result.getX(), result.getY());
+        if (result.hit()) {
+            final Ship s = result.sunk();
+            if (s == null) {
+                this.messageLabel.setText("HIT!");
+            } else {
+                boardPanel.repaint(); // repaint whole board to color sunk ship
+                if (result.gameWon()) {
+                    this.messageLabel.setText("HIT and " + s.getName() + " destroyed and " + bomber.getName() + " wins!");
+                    this.player1BoardPanel.setEnabled(false);
+                    this.player2BoardPanel.setEnabled(false);
+                    this.player1BoardPanel.setShowShips(true);
+                    this.player2BoardPanel.setShowShips(true);
+                    this.state = State.GAME_OVER;
+                    this.controlButton.setText("New game");
+                    this.controlButton.setEnabled(true);
+                } else {
+                    this.messageLabel.setText("HIT and " + s.getName() + " destroyed!");
+                }
+            }
+        } else {
+            this.messageLabel.setText("MISS!");
+        }
+        b.repaint(); // button repaints with current square status
     }
+    public void bombDropped(final AbstractPlayer victim, final int x, final int y) {
+        this.controlButton.setEnabled(false);
+        this.player1BoardPanel.setEnabled(false);
+        this.player2BoardPanel.setEnabled(false);
+        this.game.takeTurn(x, y); // calls back to display result
+    }
+
 }

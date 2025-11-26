@@ -4,7 +4,7 @@ import Battleships.AbstractGame;
 import Battleships.AbstractPlayer;
 
 public class GUIGame extends AbstractGame {
-    public static final int DELAY = 2000;
+    public static final int DELAY = 200;
     public GUIGame(final AbstractPlayer player1, final AbstractPlayer player2) {
         super(player1, player2);
     }
