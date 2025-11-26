@@ -1,6 +1,8 @@
 package Battleships.gui;
 
 import Battleships.AbstractGame;
+import Battleships.AbstractPlayer;
+import Battleships.Outcome;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,6 +37,26 @@ public class GamePanel extends JPanel {
 
     public void setGame(AbstractGame game) {
         this.game = game;
+        if (this.player1BoardPanel != null) { remove(this.player1BoardPanel); }
+        if (this.player2BoardPanel != null) { remove(this.player2BoardPanel); }
+
+        ((GUIPlayer)this.game.getPlayer1()).setGamePanel(this);
+        ((GUIPlayer)this.game.getPlayer2()).setGamePanel(this);
+        this.player1BoardPanel = new BoardPanel(game.getPlayer1(), this);
+        this.player2BoardPanel = new BoardPanel(game.getPlayer2(), this);
+
+        if (this.game.getPlayer1().isHuman() == this.game.getPlayer2().isHuman()) {
+            // two humans or two computers; show no ships
+        } else {
+            this.player1BoardPanel.setShowShips(this.game.getPlayer1().isHuman());
+            this.player2BoardPanel.setShowShips(this.game.getPlayer2().isHuman());
+        }
+        this.player1BoardPanel.setEnabled(false);
+        this.player2BoardPanel.setEnabled(false);
+        add(this.player1BoardPanel, BorderLayout.WEST);
+        add(this.player2BoardPanel, BorderLayout.EAST);
+        this.messageLabel.setText(game.playerWhoStarted().getName() + " to go first");
+        repaint();
     }
     private void controlButtonPressed() {
         switch(this.state) {
@@ -57,5 +79,27 @@ public class GamePanel extends JPanel {
                 this.game.startGame();
                 break;
         }
+    }
+    public void playerQuit(final AbstractPlayer player) {
+        this.messageLabel.setText(player.getName() + " quit.");
+        this.player1BoardPanel.setEnabled(false);
+        this.player2BoardPanel.setEnabled(false);
+        this.player1BoardPanel.setShowShips(true);
+        this.player2BoardPanel.setShowShips(true);
+    }
+    public void prompt(final AbstractPlayer player) {
+        if (player == this.game.getPlayer1()) {
+            this.messageLabel.setText(">>> " + player.getName() + " to bomb " + player.getOpponent().getName() + "! >>>");
+            this.player1BoardPanel.setEnabled(false);
+            this.player2BoardPanel.setEnabled(this.game.getPlayer1().isHuman());
+        } else {
+            this.messageLabel.setText("<<< " + player.getName() + " to bomb " + player.getOpponent().getName() + "! <<<");
+            this.player1BoardPanel.setEnabled(this.game.getPlayer2().isHuman());
+            this.player2BoardPanel.setEnabled(false);
+        }
+        this.controlButton.setEnabled(player.isHuman());
+    }
+
+    public void displayResult(final AbstractPlayer bomber, final Outcome result) {
     }
 }

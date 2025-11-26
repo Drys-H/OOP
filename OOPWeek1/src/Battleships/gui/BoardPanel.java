@@ -1,5 +1,7 @@
 package Battleships.gui;
 
+import Battleships.AbstractGame;
+import Battleships.AbstractPlayer;
 import Battleships.Board;
 import Battleships.BoardFactory;
 
@@ -10,9 +12,15 @@ public class BoardPanel extends JPanel {
     private Board board;
     private BoardButton[][] boardButtons;
 
-    public BoardPanel(Board board){
-        super(new GridLayout(board.getHeight(),board.getWidth()));
-        this.board = board;
+    private AbstractPlayer player;
+    private GamePanel gamePanel;
+
+    public BoardPanel(AbstractPlayer player, GamePanel gamePanel){
+        super(new GridLayout(player.getBoard().getHeight(), player.getBoard().getWidth()));
+        setBorder(BorderFactory.createTitledBorder(player.getName()));
+        this.gamePanel = gamePanel;
+        this.board = player.getBoard();
+        this.player = player;
         this.boardButtons = new BoardButton[board.getHeight()][board.getWidth()];
         for (int y = 0; y < this.boardButtons.length; y++) {
             final int finalY = y;
@@ -47,17 +55,16 @@ public class BoardPanel extends JPanel {
             }
         }
     }
-    public static void launch(String[] args) {
-        JFrame f = new JFrame();
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        Board board = BoardFactory.getBigBoard();
-        BoardPanel bp = new BoardPanel(board);
-        f.add(bp);
-        f.pack();
-        f.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> launch(args));
-    }
+//    public static void launch(String[] args) {
+//        JFrame f = new JFrame();
+//        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//        Board board = BoardFactory.getBigBoard();
+//        BoardPanel bp = new BoardPanel(board);
+//        f.add(bp);
+//        f.pack();
+//        f.setVisible(true);
+//    }
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(() -> launch(args));
+//    }
 }
