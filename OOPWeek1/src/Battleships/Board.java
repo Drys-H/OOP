@@ -46,6 +46,7 @@ public class Board {
 
     private final List<Ship> ships = new ArrayList<>();
 
+    private Fleet fleet;
 
     public Board(int width, int height) {
         this.width = width;
@@ -98,8 +99,11 @@ public class Board {
     //     getSquare(4,3).setShip(s);
     //     getSquare(5,3).setShip(s);
     // }
-
+        public Fleet getFleet(){
+        return this.fleet;
+        }
         public void setUp(Fleet fleet) {
+            this.fleet = fleet;
             for (Ship s : fleet.getShips()) {
                 placeShip(s);
             }

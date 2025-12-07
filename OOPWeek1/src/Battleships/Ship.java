@@ -28,10 +28,10 @@ public abstract class Ship {
         return code;
     }
 
-    public int getx(){
+    public int getX(){
         return x;
     }
-     public int gety(){
+     public int getY(){
         return y;
     }
 

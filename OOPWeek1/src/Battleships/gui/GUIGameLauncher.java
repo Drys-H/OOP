@@ -1,21 +1,21 @@
 package Battleships.gui;
 
 import Battleships.*;
-import Battleships.strategy.RandomStrategy;
+import Battleships.strategy.*;
 
 import javax.swing.*;
 
 public class GUIGameLauncher {
 
     public static AbstractGame createGame() {
-        Board[] boards = BoardFactory.getBigBoards();
-        //Board[] boards = BoardFactory.getSmallBoards();
+        //Board[] boards = BoardFactory.getBigBoards();
+        Board[] boards = BoardFactory.getSmallBoards();
         //Board[] boards = BoardFactory.getTinyBoards();
         GUIPlayer player1 = null;
         GUIPlayer player2 = null;
         final ComputerPlayerStrategy strategy1 = new RandomStrategy();
-        final ComputerPlayerStrategy strategy2 = new RandomStrategy();
-        final GameType gameType = GameType.HUMAN_V_COMPUTER;
+        final ComputerPlayerStrategy strategy2 = new BestStrategy(boards[0]);
+        final GameType gameType = GameType.COMPUTER_V_COMPUTER;
         switch(gameType) {
             case COMPUTER_V_COMPUTER:
                 player1 = new GUIComputerPlayer("Computer1", boards[0], strategy1);
